@@ -213,16 +213,15 @@ class Probe(Thread, metaclass = abc.ABCMeta):
         # clean up before termination
         self.cleanUp()
 
+    @abc.abstractmethod
+    def collect(self):
+        """Probe Developer must override this method to collect values"""
+        pass
 
-@abc.abstractmethod
-def collect(self):
-    """Probe Developer must override this method to collect values"""
-    pass
 
-
-def cleanUp(self):
-    """Probe Developer can override this method to clean up before TERM"""
-    pass
+    def cleanUp(self):
+        """Probe Developer can override this method to clean up before TERM"""
+        pass
 
 
 class ProbeStatus:
