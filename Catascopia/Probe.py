@@ -200,8 +200,8 @@ class Probe(Thread, metaclass = abc.ABCMeta):
                         print('Probe ' + self.name + ', ' + s)
                     self._writeToLog(s)
                     self.errors += 1
-                    if self.errors > Probe.__MAX_PERMITTED_ERRORS:
-                        self._writeToLog('TERMINATTING due to too many ERRORS')
+                    if self.errors > Probe.__MAX_CONSECUTIVE_ERRORS:
+                        self._writeToLog('TERMINATING due to too many ERRORS')
                         self.terminate()
                     else:
                         time.sleep(self.period * self.errors)
