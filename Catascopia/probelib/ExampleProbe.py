@@ -1,6 +1,8 @@
 import random
+import time
+
 from Catascopia.Probe import Probe
-from Catascopia.Metrics import SimpleMetric, CounterMetric, DiffMetric
+from Catascopia.Metrics import SimpleMetric, CounterMetric, DiffMetric, TimerMetric
 
 class ExampleProbe(Probe):
 
@@ -11,16 +13,20 @@ class ExampleProbe(Probe):
         self.myMetric2 = SimpleMetric('myMetric2', '#', 'random int between 0 and 1000', 0, 1000, higherIsBetter=False)
         self.myMetric3 = CounterMetric('myMetric3', '#', 'counter incrementing by 1 and reseting at 20', maxVal=20)
         self.myMetric4 = DiffMetric('myMetric4', '#', 'scaled difference from previous val')
+        self.myMetric5 = TimerMetric('myMetric5', maxVal= 10)
 
         self.add_metric(self.myMetric1)
         self.add_metric(self.myMetric2)
         self.add_metric(self.myMetric3)
         self.add_metric(self.myMetric4)
+        self.add_metric(self.myMetric5)
 
     def get_desc(self):
         return "ExampleProbe collects some dummy metrics..."
 
     def collect(self):
+        self.myMetric5.timer_reset_and_start()
+
         d = random.uniform(0, 10)
         i = random.randint(0, 1000)
 
@@ -28,6 +34,10 @@ class ExampleProbe(Probe):
         self.myMetric2.set_val(i)
         self.myMetric3.inc()
         self.myMetric4.update(i)
+
+        time.sleep(d)
+        self.myMetric5.timer_end()
+
 
 
 def main():
