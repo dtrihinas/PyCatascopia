@@ -213,6 +213,12 @@ class Probe(Thread, metaclass = abc.ABCMeta):
         # clean up before termination
         self.cleanUp()
 
+    def push_to_queue(self, metrics):
+        if self.queue:
+            for m in metrics:
+                self.queue.put(str(m), timeout=1)
+
+
     @abc.abstractmethod
     def collect(self):
         """Probe Developer must override this method to collect values"""
