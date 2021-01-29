@@ -12,6 +12,7 @@ class Probe(Thread, metaclass = abc.ABCMeta):
     __DEFAULT_LOGGING_PATH = "."
     __MAX_CONSECUTIVE_ERRORS = 10
 
+
     def __init__(self, name, periodicity,  debug = False, logging = False):
         # give the thread the same name with the probe for easier debugging
         super(Probe, self).__init__(name = name)
