@@ -19,7 +19,6 @@ class CatascopiaDecorators:
             simple_metric = SimpleMetric(name, unit, desc, minVal=0.0, higherIsBetter=False)
             simple_metric.set_val(te - ts)
             cls.__store(simple_metric)
-            print(simple_metric.get_val())
             return result
         return wrap
 
